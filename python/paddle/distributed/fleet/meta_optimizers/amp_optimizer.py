@@ -14,6 +14,8 @@
 import paddle.fluid.contrib.mixed_precision as mixed_precision
 from .meta_optimizer_base import MetaOptimizerBase
 
+import paddle
+
 __all__ = []
 
 

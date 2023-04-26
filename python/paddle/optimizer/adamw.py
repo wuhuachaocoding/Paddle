@@ -427,17 +427,11 @@ class AdamW(Optimizer):
 
         # Create accumulator tensors for first and second moments
         for p in parameters:
-            if self._multi_precision and (
-                p.dtype == core.VarDesc.VarType.FP16
-                or p.dtype == core.VarDesc.VarType.BF16
-            ):
+            if self._multi_precision and (p.dtype == core.VarDesc.VarType.FP16 or p.dtype == core.VarDesc.VarType.BF16):
                 master_p = self._create_master_weight(p)
                 self._add_moments_pows(master_p)
                 continue
-            if (
-                p.dtype == core.VarDesc.VarType.FP16
-                or p.dtype == core.VarDesc.VarType.BF16
-            ) and not self._multi_precision:
+            if (p.dtype == core.VarDesc.VarType.FP16 or p.dtype == core.VarDesc.VarType.BF16) and not self._multi_precision:
                 warnings.warn(
                     "Accumulating with FP16/BFP16 in optimizer can lead to poor accuracy or slow convergence."
                     "Consider using multi_precision=True option of the Adam optimizer."
